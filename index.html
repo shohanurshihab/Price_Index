@@ -693,7 +693,7 @@
 
 async function loadSharedData() {
     try {
-        const response = await fetch('https://github.com/shohanurshihab/Price_Index/blob/main/shared-backup.json');
+        const response = await fetch('https://raw.githubusercontent.com/shohanurshihab/Price_Index/main/shared-backup.json');
         if (response.ok) {
             const sharedData = await response.json();
             Object.entries(sharedData.prices || {}).forEach(([code, data]) => {
