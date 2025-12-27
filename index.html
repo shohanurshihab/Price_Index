@@ -691,6 +691,26 @@
         let selectedItems = new Set();
         let lastSearchCode = '-';
 
+async function loadSharedData() {
+    try {
+        const response = await fetch('https://github.com/shohanurshihab/Price_Index/blob/main/shared-backup.json');
+        if (response.ok) {
+            const sharedData = await response.json();
+            Object.entries(sharedData.prices || {}).forEach(([code, data]) => {
+                if (!prices[code]) {
+                    prices[code] = data;
+                }
+            });
+            saveData();
+            updateStats();
+            renderList();
+            renderManageList();
+        }
+    } catch (error) {
+        console.log('No shared data available');
+    }
+}
+
         // Load data from localStorage
         function loadData() {
             try {
@@ -710,6 +730,7 @@
             updateStats();
             renderList();
             renderManageList();
+            loadSharedData();
         }
 
         // Save data to localStorage
